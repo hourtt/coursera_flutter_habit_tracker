@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'add_habit_screen.dart';
+
 class HabitTrackerScreen extends StatefulWidget {
   final String username;
 
@@ -22,7 +24,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
   }
 
   Future<void> _saveHabits() async {
-    //* save habits to preferences in the future
+    //save habits to preferences in the future
   }
 
   Color _getColorFromHex(String hexColor) {
@@ -157,10 +159,12 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
       ),
       floatingActionButton: selectedHabitsMap.isEmpty
           ? FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddHabitScreen()));
+              },
               backgroundColor: Colors.blue.shade700,
               tooltip: 'Add Habits',
-              child: const Icon(Icons.add),
+              child: Icon(Icons.add),
             )
           : null,
     );
