@@ -47,7 +47,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   }
 
   Future<void> _saveHabits() async {
-    // This function intentionally left empty as no saving is needed
+    //* This function intentionally left empty as no saving is needed
   }
 
   @override
