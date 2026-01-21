@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 import 'habit_tracker_screen.dart';
@@ -19,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final String defaultPassword = 'password123';
 
   void _login() {
-    // The login logic goes here
+    //* The login logic goes here
     print("login logic here");
 
     final username = _usernameController.text;
