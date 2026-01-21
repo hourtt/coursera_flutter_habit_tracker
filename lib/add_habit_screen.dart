@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class AddHabitScreen extends StatefulWidget {
@@ -22,7 +24,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     'Teal': Colors.teal,
     'Deep Purple': Colors.deepPurple,
   };
-  String selectedColorName = 'Amber'; // Default color name
+  String selectedColorName = 'Amber'; //* Set default selected color name
 
   @override
   void initState() {
