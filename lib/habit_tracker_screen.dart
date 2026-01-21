@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class HabitTrackerScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
   }
 
   Future<void> _saveHabits() async {
-    //save habits to preferences in the future
+    //* save habits to preferences in the future
   }
 
   Color _getColorFromHex(String hexColor) {
