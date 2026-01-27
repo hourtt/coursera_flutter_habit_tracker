@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   Color selectedColor = Colors.amber; // Default color
   Map<String, String> selectedHabitsMap = {};
   Map<String, String> completedHabitsMap = {};
+
   final Map<String, Color> _habitColors = {
     'Amber': Colors.amber,
     'Red Accent': Colors.redAccent,
@@ -25,6 +28,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
     'Teal': Colors.teal,
     'Deep Purple': Colors.deepPurple,
   };
+  
   String selectedColorName = 'Amber'; // Default color name
 
   @override
