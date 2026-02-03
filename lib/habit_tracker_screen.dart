@@ -1,9 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'add_habit_screen.dart';
+import 'login_screen.dart';
+import 'personal_info_screen.dart';
+import 'report_screen.dart';
 
 class HabitTrackerScreen extends StatefulWidget {
   final String username;
@@ -67,26 +68,6 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //* Added drawer for navigation
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue.shade700),
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-            ListTile(leading: Icon(Icons.settings), title: Text('Configure')),
-            ListTile(leading: Icon(Icons.person), title: Text('Personal Info')),
-            ListTile(leading: Icon(Icons.analytics), title: Text('Reports')),
-            ListTile(leading: Icon(Icons.notifications), title: Text('Notifications')),
-            ListTile(leading: Icon(Icons.logout), title: Text('Sign Out')),
-          ],
-        ),
-      ),
       appBar: AppBar(
         backgroundColor: Colors.blue.shade700,
         title: Text(
@@ -94,6 +75,65 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
           style: const TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         automaticallyImplyLeading: true,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue.shade700),
+              child: const Text(
+                'Menu',
+                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Configure'),
+              onTap: () async {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddHabitScreen()),
+                ).then((updatedHabits) {
+                  _loadUserData(); // Reload data after returning
+                });
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Personal Info'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const PersonalInfoScreen()),
+                ).then((_) {
+                  _loadUserData(); // Reload data after returning
+                });
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.analytics),
+              title: const Text('Reports'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ReportsScreen()),
+                );
+              },
+            ),
+            ListTile(leading: Icon(Icons.notifications), title: Text('Notifications')),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Sign Out'),
+              onTap: () {
+                _signOut(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -145,7 +185,7 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
                     },
                   ),
                 ),
-          Divider(),
+          const Divider(),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text('Done ✅🎉', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -206,10 +246,17 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
               },
               backgroundColor: Colors.blue.shade700,
               tooltip: 'Add Habits',
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             )
           : null,
     );
+  }
+
+  void _signOut(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   Widget _buildHabitCard(String title, Color color, {bool isCompleted = false}) {
@@ -223,7 +270,9 @@ class _HabitTrackerScreenState extends State<HabitTrackerScreen> {
             title.toUpperCase(),
             style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          trailing: isCompleted ? Icon(Icons.check_circle, color: Colors.green, size: 28) : null,
+          trailing: isCompleted
+              ? const Icon(Icons.check_circle, color: Colors.green, size: 28)
+              : null,
         ),
       ),
     );
